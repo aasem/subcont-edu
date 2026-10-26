@@ -352,6 +352,12 @@ table.cnt td:not(:first-child),table.cnt th:not(:first-child){text-align:right;f
 .bp{min-width:960px}
 .bp-grid{grid-template-columns:118px repeat(5,minmax(0,1fr)) 22px repeat(2,minmax(0,1.1fr))}
 .arc .anote{font-size:14.5px;color:var(--muted);margin:-2px 0 8px}
+/* The Big Picture uses the whole width of the window */
+body.wide .shell{max-width:none}
+body.wide .main{padding-right:8px}
+body.wide .bp{min-width:1000px}
+@media (min-width:901px){body.wide .shell{grid-template-columns:250px minmax(0,1fr);gap:0 32px}}
+body.wide .bp-scroll{margin-right:0}
 
 </style>
 </head>
@@ -690,6 +696,7 @@ function show(id,{scroll=true}={}){
   if(/^(cell|route)-/.test(id)||id==="glance"){sub=id;id="big"}
   if(!(id in BY_SLUG)&&!document.querySelector(`.view[data-view="${CSS.escape(id)}"]`))id="question";
   VIEW=id;editing=false;
+  document.body.classList.toggle("wide",id==="big");
   document.querySelectorAll(".view").forEach(v=>v.hidden=true);
   let title;
   if(id in BY_SLUG){
